@@ -7,6 +7,9 @@ import org.bukkit.inventory.ItemStack;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -30,11 +33,11 @@ public class LettersManager {
    }
 
    public void loadHeads() {
-      File csv = new File(plugin.getDataFolder(), "letters.csv");
-      Path path = Paths.get(csv.getAbsolutePath());
+      try {
+         URLConnection urlConnection = new URL("https://raw.githubusercontent.com/Tigahz/HeadLibrary/master/letters.csv").openConnection();
+         BufferedReader reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
 
-      try (BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8)) {
-         // Reading the first line of the file
+         // Reading the first line of the csv file
          String line = reader.readLine();
 
          // Looping until all lines are read, when line is null, the end of the file has been reached
@@ -50,15 +53,15 @@ public class LettersManager {
 
             LetterHead head = new LetterHead(category, contents[1], contents[2]);
             letters.add(head);
+
             // Reading the next line, and then looping
             line = reader.readLine();
          }
-         Bukkit.getLogger().log(Level.INFO, "[HeadLibrary] Head Database loaded");
+         Bukkit.getLogger().log(Level.INFO, "[HeadLibrary] Letter Database loaded");
 
       } catch (Exception e) {
          e.printStackTrace();
-         Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[HeadLibrary] Error loading Letter Database, ensure you have an internet connection!");
-         Bukkit.getPluginManager().disablePlugin(plugin);
+         Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[HeadLibrary] Error loading Letter Database, contact plugin author!");
       }
    }
 

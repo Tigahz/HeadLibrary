@@ -4,8 +4,10 @@ import me.tigahz.headlibrary.HeadLibrary;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
-import java.io.BufferedReader;
-import java.io.File;
+import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -29,11 +31,11 @@ public class HeadManager {
    }
 
    public void loadHeads() {
-      File csv = new File(plugin.getDataFolder(), "heads.csv");
-      Path path = Paths.get(csv.getAbsolutePath());
+      try {
+         URLConnection urlConnection = new URL("https://raw.githubusercontent.com/Tigahz/HeadLibrary/master/heads.csv").openConnection();
+         BufferedReader reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
 
-      try (BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8)) {
-         // Reading the first line of the file
+         // Reading the first line of the csv file
          String line = reader.readLine();
 
          // Looping until all lines are read, when line is null, the end of the file has been reached
@@ -49,8 +51,7 @@ public class HeadManager {
 
       } catch (Exception e) {
          e.printStackTrace();
-         Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[HeadLibrary] Error loading Head Database, ensure you have an internet connection!");
-         Bukkit.getPluginManager().disablePlugin(plugin);
+         Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[HeadLibrary] Error loading Head Database, contact plugin author!");
       }
    }
 
