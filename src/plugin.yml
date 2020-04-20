@@ -1,0 +1,10 @@
+name: HeadLibrary
+main: me.tigahz.headlibrary.HeadLibrary
+description: Get heads from our library
+author: Tigahz
+version: 5.0
+api-version: 1.13
+commands:
+  heads:
+    aliases: [sl, headlibrary, hl, skulls, skull, head, gethead]
+    description: Get heads
