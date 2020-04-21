@@ -24,21 +24,16 @@ public class HeadLibrary extends JavaPlugin {
 
    public List<String> letterCategories;
 
-   // Loading the Head Database
-   @Override
-   public void onLoad() {
-   }
-
    @Override
    public void onEnable() {
       instance = this;
 
       letterCategories = new ArrayList<>();
 
-      headManager = new HeadManager(this);
+      headManager = new HeadManager();
       headManager.loadHeads();
 
-      lettersManager = new LettersManager(this);
+      lettersManager = new LettersManager();
       lettersManager.loadHeads();
 
       new CategoryGUI(this);

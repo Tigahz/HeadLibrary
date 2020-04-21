@@ -2,6 +2,9 @@ package me.tigahz.headlibrary.heads;
 
 import org.apache.commons.lang.WordUtils;
 
+/**
+ * @author Tigahz
+ */
 public class LetterHead {
 
    private String category;

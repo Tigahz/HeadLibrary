@@ -27,7 +27,6 @@ public class HeadGUI implements Listener {
    private HeadCategory category;
    private String name;
 
-   // add boolean if letter gui
    public HeadGUI(HeadCategory category) {
       this.category = category;
       this.name = HeadLibrary.getInstance().getMessages().PREFIX + "&c" + WordUtils.capitalizeFully(category.getName());

@@ -1,5 +1,8 @@
 package me.tigahz.headlibrary.heads;
 
+/**
+ * @author Tigahz
+ */
 public class Head {
 
    private HeadCategory category;

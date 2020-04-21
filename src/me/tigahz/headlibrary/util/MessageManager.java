@@ -1,5 +1,8 @@
 package me.tigahz.headlibrary.util;
 
+/**
+ * @author Tigahz
+ */
 public class MessageManager {
 
    public final String PREFIX = "&c&lHead&a&lLibrary &8&l» &7";

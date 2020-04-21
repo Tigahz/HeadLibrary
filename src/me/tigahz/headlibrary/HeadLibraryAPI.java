@@ -8,6 +8,9 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
+/**
+ * @author Tigahz
+ */
 public class HeadLibraryAPI {
 
    public static ItemStack createItemHead(String name, String link) {

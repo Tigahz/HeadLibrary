@@ -1,28 +1,19 @@
 package me.tigahz.headlibrary.heads;
 
-import me.tigahz.headlibrary.HeadLibrary;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
 import java.io.*;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
+/**
+ * @author Tigahz
+ */
 public class HeadManager {
-
-   private HeadLibrary plugin;
-
-   public HeadManager(HeadLibrary plugin) {
-      this.plugin = plugin;
-   }
 
    private List<Head> heads = new ArrayList<>();
 

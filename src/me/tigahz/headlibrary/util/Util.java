@@ -1,5 +1,8 @@
 package me.tigahz.headlibrary.util;
 
+/**
+ * @author Tigahz
+ */
 import org.bukkit.ChatColor;
 
 public class Util {

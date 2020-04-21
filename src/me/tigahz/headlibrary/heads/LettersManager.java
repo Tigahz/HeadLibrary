@@ -18,13 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
+/**
+ * @author Tigahz
+ */
 public class LettersManager {
-
-   private HeadLibrary plugin;
-
-   public LettersManager(HeadLibrary plugin) {
-      this.plugin = plugin;
-   }
 
    private List<LetterHead> letters = new ArrayList<>();
 
