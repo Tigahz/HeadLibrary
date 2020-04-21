@@ -60,34 +60,33 @@ public class HeadGUI implements Listener {
             Head head = heads.get(i);
             inventory.setItem(pos, new HeadBuilder().setName("&a» &c" + head.getName() + " &a«").setSkin(head.getLink()).build());
             // Throws error when there is space in an inventory, ignoring it
-         } catch (IndexOutOfBoundsException ignored) {
+         } catch (IndexOutOfBoundsException ignored) {}
+
+      }
+
+      // Setting up bottom bar
+      inventory.setItem(45, new ItemBuilder(Material.BARRIER).setName("&c&lClose Menu").build());
+      inventory.setItem(46, new ItemBuilder(Material.ARROW).setName("&c&lReturn to Categories").build());
+
+      // Creating the page selection bar
+      int pageCount = (int) Math.ceil((double) heads.size() / 45);
+      for (int x = 0; x < pageCount; x++) {
+         if (x > 6) break;
+         int num = x + 1;
+         int slot = 46 + x + 2;
+
+         if ((num) == page) {
+            inventory.setItem(slot, new ItemBuilder(Material.MAP).setName("&a&lPage " + num).stackOf(num).build());
+            continue;
          }
+         inventory.setItem(slot, new ItemBuilder(Material.PAPER).setName("&a&lPage " + num).stackOf(num).build());
+      }
 
-
-         // Setting up bottom bar
-         inventory.setItem(45, new ItemBuilder(Material.BARRIER).setName("&c&lClose Menu").build());
-         inventory.setItem(46, new ItemBuilder(Material.ARROW).setName("&c&lReturn to Categories").build());
-
-         // Creating the page selection bar
-         int pageCount = (int) Math.ceil((double) heads.size() / 45);
-         for (int x = 0; x < pageCount; x++) {
-            if (x > 6) break;
-            int num = x + 1;
-            int slot = 46 + x + 2;
-
-            if ((num) == page) {
-               inventory.setItem(slot, new ItemBuilder(Material.MAP).setName("&a&lPage " + num).stackOf(num).build());
-               continue;
-            }
-            inventory.setItem(slot, new ItemBuilder(Material.PAPER).setName("&a&lPage " + num).stackOf(num).build());
-         }
-
-         // Filling the rest of the bar with grey stained glass panes
-         ItemStack filler = new ItemBuilder(Material.GRAY_STAINED_GLASS_PANE).setName("&f").build();
-         for (int y = 45; y < 54; y++) {
-            if (inventory.getItem(y) == null || inventory.getItem(y).getType() == Material.AIR) {
-               inventory.setItem(y, filler);
-            }
+      // Filling the rest of the bar with grey stained glass panes
+      ItemStack filler = new ItemBuilder(Material.GRAY_STAINED_GLASS_PANE).setName("&f").build();
+      for (int y = 45; y < 54; y++) {
+         if (inventory.getItem(y) == null || inventory.getItem(y).getType() == Material.AIR) {
+            inventory.setItem(y, filler);
          }
       }
       return inventory;

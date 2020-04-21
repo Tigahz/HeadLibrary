@@ -72,8 +72,19 @@ public class LettersManager {
       return heads;
    }
 
+   // Used for getting the category skulls
    public String getFirstLinkFromCategory(String category) {
       return getHeadsFromCategory(category).get(0).getLink();
+   }
+
+   public List<LetterHead> getHeadsFromKeyword(String keyword) {
+      List<LetterHead> heads = new ArrayList<>();
+      for (LetterHead head : this.letters) {
+         if (head.getName().toLowerCase().contains(keyword.toLowerCase())) {
+            heads.add(head);
+         }
+      }
+      return heads;
    }
 
 }

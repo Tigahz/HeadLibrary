@@ -56,4 +56,14 @@ public class HeadManager {
       return heads;
    }
 
+   public List<Head> getHeadsFromKeyword(String keyword) {
+      List<Head> heads = new ArrayList<>();
+      for (Head head : this.heads) {
+         if (head.getName().toLowerCase().contains(keyword.toLowerCase())) {
+            heads.add(head);
+         }
+      }
+      return heads;
+   }
+
 }
