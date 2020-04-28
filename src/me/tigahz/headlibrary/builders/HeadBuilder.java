@@ -18,8 +18,8 @@ import java.util.UUID;
  */
 public class HeadBuilder {
 
-   private ItemStack item;
-   private SkullMeta meta;
+   private final ItemStack item;
+   private final SkullMeta meta;
    private Field field;
 
    public HeadBuilder() {
@@ -32,10 +32,10 @@ public class HeadBuilder {
       return item;
    }
 
-   public HeadBuilder setSkin(String link) {
-      link = "http://textures.minecraft.net/texture/" + link;
+   public HeadBuilder setSkin(String id) {
+      id = "http://textures.minecraft.net/texture/" + id;
       GameProfile profile = new GameProfile(UUID.randomUUID(), null);
-      byte[] data = Base64.getEncoder().encode(String.format("{textures:{SKIN:{url:\"%s\"}}}", link).getBytes());
+      byte[] data = Base64.getEncoder().encode(String.format("{textures:{SKIN:{url:\"%s\"}}}", id).getBytes());
       profile.getProperties().put("textures", new Property("textures", new String(data)));
 
       try {

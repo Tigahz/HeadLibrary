@@ -1,11 +1,12 @@
 package me.tigahz.headlibrary;
 
 import me.tigahz.headlibrary.builders.HeadBuilder;
+import me.tigahz.headlibrary.heads.DatabaseManager;
 import me.tigahz.headlibrary.heads.Head;
 import me.tigahz.headlibrary.heads.HeadCategory;
-import me.tigahz.headlibrary.heads.LetterHead;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,7 +23,7 @@ public class HeadLibraryAPI {
    }
 
    public static List<Head> getHeadsFromCategory(HeadCategory category) {
-      return HeadLibrary.getInstance().getHeadManager().getHeadsFromCategory(category);
+      return new DatabaseManager().getHeadManager().getHeadsFromCategory(category);
    }
 
    public static String getLinkFromHead(Head head) {
@@ -34,11 +35,18 @@ public class HeadLibraryAPI {
    }
 
    public static List<Head> getHeads() {
-      return HeadLibrary.getInstance().getHeadManager().getHeads();
+      return new DatabaseManager().getHeadManager().heads;
    }
 
-   public static List<LetterHead> getLetterHeads() {
-      return HeadLibrary.getInstance().getLettersManager().getLetters();
+   public static List<Head> getLetterHeads() {
+      return new DatabaseManager().getLetterManager().letters;
+   }
+
+   public static List<Head> getAllHeads() {
+      List<Head> heads = new ArrayList<>();
+      heads.addAll(getHeads());
+      heads.addAll(getLetterHeads());
+      return heads;
    }
 
 }

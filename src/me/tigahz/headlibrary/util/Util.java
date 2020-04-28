@@ -11,4 +11,8 @@ public class Util {
       return ChatColor.translateAlternateColorCodes('&', string);
    }
 
+   public static String bungee(String string) {
+      return net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', string);
+   }
+
 }

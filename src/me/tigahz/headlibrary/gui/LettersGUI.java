@@ -3,6 +3,7 @@ package me.tigahz.headlibrary.gui;
 import me.tigahz.headlibrary.HeadLibrary;
 import me.tigahz.headlibrary.builders.HeadBuilder;
 import me.tigahz.headlibrary.builders.ItemBuilder;
+import me.tigahz.headlibrary.util.MessageManager;
 import me.tigahz.headlibrary.util.Util;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.Bukkit;
@@ -24,7 +25,7 @@ import java.util.List;
  */
 public class LettersGUI implements Listener {
 
-   private String name = HeadLibrary.getInstance().getMessages().PREFIX + "&cLetters";
+   private String name = new MessageManager().PREFIX + "&cLetters";
 
    public LettersGUI() {
    }
@@ -41,9 +42,9 @@ public class LettersGUI implements Listener {
       int categorySize = categories.size();
       int[] positions = new int[] {10, 12, 14, 16, 19, 21, 23, 25, 28, 30, 32, 34};
       for (int i = 0; i < categorySize; i++) {
-         String name = "&a&l» &c" + WordUtils.capitalizeFully(categories.get(i)) + " &a&l«";
-         String link = HeadLibrary.getInstance().getLettersManager().getFirstLinkFromCategory(categories.get(i));
-         inventory.setItem(positions[i], new HeadBuilder().setName(name).setLore(Collections.singletonList("&aClick for " + WordUtils.capitalizeFully(categories.get(i) + " letters!"))).setSkin(link).build());
+         String name = WordUtils.capitalizeFully(categories.get(i));
+         String link = HeadLibrary.getDatabaseManager().getLetterManager().getFirstLinkFromCategory(categories.get(i));
+         inventory.setItem(positions[i], new HeadBuilder().setName("&c&l" + name).setLore(Collections.singletonList("&aClick for " + name + " letters!")).setSkin(link).build());
       }
 
       // Setting up bottom bar
@@ -67,14 +68,11 @@ public class LettersGUI implements Listener {
 
    @EventHandler
    public void onClick(InventoryClickEvent event) {
-      // If they are not a player, not idea when this would even return
+
       if (!(event.getWhoClicked() instanceof Player)) return;
-      // If they inventory doesn't exist
       if (event.getClickedInventory() == null) return;
-      // If the inventory type isn't a chest, prevents unlikely complications with other plugins
       if (!(event.getClickedInventory().getType() == InventoryType.CHEST)) return;
 
-      // Name, 1.13+
       String inventoryName = event.getView().getTitle();
       if (!inventoryName.equals(Util.format(name))) return;
 
@@ -88,10 +86,7 @@ public class LettersGUI implements Listener {
 
       if (item.getType() == Material.PLAYER_HEAD) {
          itemName = ChatColor.stripColor(itemName);
-         if (itemName.startsWith("» ") && itemName.endsWith(" «")) {
-            itemName = itemName.replace("» ", "").replace(" «", "");
-            new LetterGUI(itemName).openMenu(player);
-         }
+         new LetterGUI(itemName).openMenu(player);
       }
 
       if (itemName.equals(Util.format("&c&lClose Menu"))) {

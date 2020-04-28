@@ -1,0 +1,15 @@
+#
+# The type can only be 'base64' or 'link'
+# 'link' can ONLY be a textures.minecraft.net link
+# The custom heads will be added to its own category and to the existing category, so ensure the names are correct:
+# Animals, Blocks, Colours, Decorations, Emoji, Flags, Food, Miscellaneous, Mobs, People, Technology
+#
+heads:
+#  Traffic Cone:
+#    type: base64
+#    id: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvY2EyNjYxNmMxNWRhOGI0NDI4YzRmNmUzNDI5MDFhZDNjMWM5N2Q3MzdjY2E2NjZiNzY2YmQ1Mzc0NzhmOTIifX19"
+#    category: "Miscellaneous"
+#  Duck:
+#    type: link
+#    id: "http://textures.minecraft.net/texture/c882eb49d89f1eb8c68814e71c6263bbec7ba633f27bff6efdb92a6799ba"
+#    category: "Animals"

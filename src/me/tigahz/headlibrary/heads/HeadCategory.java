@@ -1,7 +1,5 @@
 package me.tigahz.headlibrary.heads;
 
-import org.apache.commons.lang.WordUtils;
-
 /**
  * @author Tigahz
  */
@@ -20,7 +18,7 @@ public enum HeadCategory {
    TECHNOLOGY;
 
    public String getName() {
-      return WordUtils.capitalize(this.name());
+      return name();
    }
 
    // Checks a string to see if the name matches the category, only used internally
