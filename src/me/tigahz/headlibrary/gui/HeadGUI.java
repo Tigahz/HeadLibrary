@@ -20,7 +20,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -33,14 +32,18 @@ public class HeadGUI implements Listener {
 
    public HeadGUI(HeadCategory category) {
       this.category = category;
-      this.name = new MessageManager().PREFIX + "&c" + WordUtils.capitalizeFully(category.getName());
+      if (category.equals(HeadCategory.MISCELLANEOUS)) {
+         this.name = new MessageManager().PREFIX + "&cMisc";
+      } else {
+         this.name = new MessageManager().PREFIX + "&c" + WordUtils.capitalizeFully(category.getName());
+      }
    }
 
    private Inventory getInventory(int page) {
 
       // If there is too many pages, return an empty inventory, this method will change by that point
       if (page > 6) return Bukkit.createInventory(null, 9);
-      Inventory inventory = Bukkit.createInventory(null, 54, Util.format(name + " " + page));
+      Inventory inventory = Bukkit.createInventory(null, 54, Util.format(name));
 
       // Page position calculations
       int min = (page - 1) * 45;
@@ -111,7 +114,7 @@ public class HeadGUI implements Listener {
 
       // Name, 1.13+
       String inventoryName = event.getView().getTitle();
-      if (!(inventoryName.startsWith(Util.format(name)))) return;
+      if (!(inventoryName.equals(Util.format(name)))) return;
 
       Player player = (Player) event.getWhoClicked();
       event.setCancelled(true);

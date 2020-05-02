@@ -1,12 +1,9 @@
 package me.tigahz.headlibrary;
 
 import me.tigahz.headlibrary.builders.HeadBuilder;
-import me.tigahz.headlibrary.heads.DatabaseManager;
 import me.tigahz.headlibrary.heads.Head;
-import me.tigahz.headlibrary.heads.HeadCategory;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,39 +11,41 @@ import java.util.List;
  */
 public class HeadLibraryAPI {
 
-   public static ItemStack createItemHead(String name, String link) {
-      return new HeadBuilder().setName(name).setSkin(link).build();
+   /**
+    * Uses Head to either decode base64 or convert the link to just the texture link
+    *
+    * @param base64 or textures.minecraft.net link
+    * @return Head as an itemstack
+    */
+   public final static ItemStack createHead(String base64) {
+      return new HeadBuilder().setSkin(new Head("", "", base64).getLink()).build();
    }
 
-   public static ItemStack createItemHead(String name, List<String> lore, String link) {
-      return new HeadBuilder().setName(name).setLore(lore).setSkin(link).build();
+   /**
+    * Uses Head to either decode base64 or convert the link to just the texture link
+    *
+    * @param base64 or textures.minecraft.net link
+    * @param name the name of the itemstack
+    * @return Head as an itemstack
+    */
+   public final static ItemStack createHead(String base64, String name) {
+      return new HeadBuilder().setName(name).setSkin(new Head("", "", base64).getLink()).build();
    }
 
-   public static List<Head> getHeadsFromCategory(HeadCategory category) {
-      return new DatabaseManager().getHeadManager().getHeadsFromCategory(category);
+   /**
+    * Uses Head to either decode base64 or convert the link to just the texture link
+    *
+    * @param base64 or textures.minecraft.net link
+    * @param name the name of the itemstack
+    * @param lore the lore of the itemstack
+    * @return Head as an itemstack
+    */
+   public final static ItemStack createHead(String base64, String name, List<String> lore) {
+      return new HeadBuilder().setName(name).setLore(lore).setSkin(new Head("", "", base64).getLink()).build();
    }
 
-   public static String getLinkFromHead(Head head) {
-      return head.getLink();
-   }
-
-   public static Head createHead(HeadCategory category, String name, String link) {
-      return new Head(category, name, link);
-   }
-
-   public static List<Head> getHeads() {
-      return new DatabaseManager().getHeadManager().heads;
-   }
-
-   public static List<Head> getLetterHeads() {
-      return new DatabaseManager().getLetterManager().letters;
-   }
-
-   public static List<Head> getAllHeads() {
-      List<Head> heads = new ArrayList<>();
-      heads.addAll(getHeads());
-      heads.addAll(getLetterHeads());
-      return heads;
+   public final static ItemStack createHead(Head head) {
+      return new HeadBuilder().setName(head.getName()).setSkin(head.getLink()).build();
    }
 
 }

@@ -76,10 +76,16 @@ public class CommandManager implements TabExecutor {
                   }
                   return true;
                }
-               if (args[0].equalsIgnoreCase("databasereload")) {
-                  HeadLibrary.getHeadConfig().reload();
-                  HeadLibrary.getDatabaseManager().reload();
-                  player.sendMessage(Util.format(messages.PREFIX + "Database reloaded!"));
+               if (args[0].equalsIgnoreCase("reload")) {
+
+                  if (player.hasPermission("headlibrary.reload")) {
+                     HeadLibrary.getHeadConfig().reload();
+                     HeadLibrary.getDatabaseManager().reload();
+                     player.sendMessage(Util.format(messages.PREFIX + "Database reloaded!"));
+                  } else {
+                     player.sendMessage(Util.format(messages.ERROR_NO_PERMISSIONS));
+                  }
+
                   return true;
                }
 
@@ -89,7 +95,7 @@ public class CommandManager implements TabExecutor {
             new CategoryGUI().openMenu(player);
 
          } else {
-            sender.sendMessage(Util.format(messages.ERROR_NO_PERMISSIONS));
+            player.sendMessage(Util.format(messages.PREFIX + "HeadLibrary v" + HeadLibrary.getInstance().getDescription().getVersion() + ", by Tigahz"));
          }
 
          return true;
@@ -98,7 +104,7 @@ public class CommandManager implements TabExecutor {
       return false;
    }
 
-   private static final String[] COMMANDS = {"about", "search", "lookup", "databasereload"};
+   private static final String[] COMMANDS = {"about", "search", "lookup", "reload"};
 
    @Override
    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {

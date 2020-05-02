@@ -40,7 +40,7 @@ public class CustomGUI implements Listener {
    private Inventory getInventory(int page) {
 
       if (page > 6) return Bukkit.createInventory(null, 9);
-      Inventory inventory = Bukkit.createInventory(null, 54, Util.format(name + " " + page));
+      Inventory inventory = Bukkit.createInventory(null, 54, Util.format(name));
 
       int min = (page - 1) * 45;
       int max = page * 45;

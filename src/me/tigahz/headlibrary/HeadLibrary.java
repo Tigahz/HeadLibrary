@@ -4,7 +4,8 @@ import me.tigahz.headlibrary.commands.CommandManager;
 import me.tigahz.headlibrary.gui.*;
 import me.tigahz.headlibrary.heads.DatabaseManager;
 import me.tigahz.headlibrary.heads.HeadCategory;
-import me.tigahz.headlibrary.util.Config;
+import me.tigahz.headlibrary.util.HeadConfig;
+import me.tigahz.headlibrary.util.JoinListener;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -30,7 +31,7 @@ public class HeadLibrary extends JavaPlugin {
       letterCategories = new ArrayList<>();
       usedHeads = new ArrayList<>();
 
-      config = new Config(this);
+      config = new HeadConfig(this);
       config.create();
 
       databaseManager = new DatabaseManager();
@@ -40,6 +41,7 @@ public class HeadLibrary extends JavaPlugin {
       new CustomGUI(this);
       new LettersGUI(this);
       new CommandManager(this);
+      new JoinListener(this);
 
       for (HeadCategory category : HeadCategory.values()) Bukkit.getPluginManager().registerEvents(new HeadGUI(category), this);
       for (String category : letterCategories) Bukkit.getPluginManager().registerEvents(new LetterGUI(category), this);
@@ -62,9 +64,9 @@ public class HeadLibrary extends JavaPlugin {
       return instance;
    }
 
-   private static Config config;
+   private static HeadConfig config;
 
-   public static Config getHeadConfig() {
+   public static HeadConfig getHeadConfig() {
       return config;
    }
 

@@ -1,7 +1,7 @@
 package me.tigahz.headlibrary.heads;
 
 import me.tigahz.headlibrary.HeadLibrary;
-import me.tigahz.headlibrary.util.Config;
+import me.tigahz.headlibrary.util.HeadConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
@@ -136,7 +136,7 @@ public class DatabaseManager {
       public List<Head> custom = new ArrayList<>();
 
       void loadHeads() {
-         Config config = HeadLibrary.getHeadConfig();
+         HeadConfig config = HeadLibrary.getHeadConfig();
          try {
             for (String name : config.get().getConfigurationSection("heads").getKeys(false)) {
                String path = "heads." + name + ".";
