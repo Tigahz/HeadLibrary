@@ -6,8 +6,10 @@ import me.tigahz.headlibrary.heads.DatabaseManager;
 import me.tigahz.headlibrary.heads.HeadCategory;
 import me.tigahz.headlibrary.util.HeadConfig;
 import me.tigahz.headlibrary.util.JoinListener;
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
@@ -22,20 +24,35 @@ import java.util.logging.Level;
 public class HeadLibrary extends JavaPlugin {
 
    public List<String> letterCategories;
-   public List<ItemStack> usedHeads;
+
+   public boolean economyEnabled;
+   public double price;
 
    @Override
    public void onEnable() {
       instance = this;
 
       letterCategories = new ArrayList<>();
-      usedHeads = new ArrayList<>();
 
       config = new HeadConfig(this);
       config.create();
 
+      getConfig().options().copyDefaults(true);
+      saveConfig();
+
       databaseManager = new DatabaseManager();
       databaseManager.load();
+
+      if (getConfig().getBoolean("economy-enabled")) {
+         economyEnabled = true;
+         price = getConfig().getDouble("price");
+         if (!setupEconomy()) {
+            Bukkit.getLogger().log(Level.INFO, "Vault not found, disabling economy");
+            economyEnabled = false;
+         }
+      } else {
+         economyEnabled = false;
+      }
 
       new CategoryGUI(this);
       new CustomGUI(this);
@@ -57,6 +74,25 @@ public class HeadLibrary extends JavaPlugin {
       instance = null;
    }
 
+   private boolean setupEconomy() {
+      if (getServer().getPluginManager().getPlugin("Vault") == null) {
+         return false;
+      }
+      RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+      if (rsp == null) return false;
+      economy = rsp.getProvider();
+      return economy != null;
+   }
+
+   public void reloadEconomy() {
+      if (getConfig().getBoolean("economy-enabled")) {
+         economyEnabled = true;
+         price = getConfig().getDouble("price");
+      } else {
+         economyEnabled = false;
+      }
+   }
+
    // Getters
    private static HeadLibrary instance = null;
 
@@ -74,6 +110,12 @@ public class HeadLibrary extends JavaPlugin {
 
    public static DatabaseManager getDatabaseManager() {
       return databaseManager;
+   }
+
+   private static Economy economy = null;
+
+   public static Economy getEconomy() {
+      return economy;
    }
 
 }

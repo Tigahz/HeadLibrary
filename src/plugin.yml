@@ -2,8 +2,10 @@ name: HeadLibrary
 main: me.tigahz.headlibrary.HeadLibrary
 description: Get heads from our library
 author: Tigahz
-version: 5.1.1
+version: 5.2
 api-version: 1.13
+softdepend:
+  - Vault
 commands:
   heads:
     aliases: [headlibrary, hl, skulls]

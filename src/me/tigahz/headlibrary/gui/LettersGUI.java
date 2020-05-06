@@ -44,7 +44,8 @@ public class LettersGUI implements Listener {
       for (int i = 0; i < categorySize; i++) {
          String name = WordUtils.capitalizeFully(categories.get(i));
          String link = HeadLibrary.getDatabaseManager().getLetterManager().getFirstLinkFromCategory(categories.get(i));
-         inventory.setItem(positions[i], new HeadBuilder().setName("&c&l" + name).setLore(Collections.singletonList("&aClick for " + name + " letters!")).setSkin(link).build());
+         int headCount = HeadLibrary.getDatabaseManager().getLetterManager().getHeadsFromCategory(categories.get(i)).size();
+         inventory.setItem(positions[i], new HeadBuilder().setName("&c&l" + name).setLore(Collections.singletonList("&a" + headCount + " heads")).setSkin(link).build());
       }
 
       // Setting up bottom bar
@@ -62,7 +63,7 @@ public class LettersGUI implements Listener {
       return inventory;
    }
 
-   void openMenu(Player player) {
+   public void openMenu(Player player) {
       player.openInventory(getInventory());
    }
 

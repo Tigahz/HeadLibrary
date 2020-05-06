@@ -10,6 +10,7 @@ import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -79,6 +80,8 @@ public class CommandManager implements TabExecutor {
                if (args[0].equalsIgnoreCase("reload")) {
 
                   if (player.hasPermission("headlibrary.reload")) {
+                     plugin.reloadConfig();
+                     HeadLibrary.getInstance().reloadEconomy();
                      HeadLibrary.getHeadConfig().reload();
                      HeadLibrary.getDatabaseManager().reload();
                      player.sendMessage(Util.format(messages.PREFIX + "Database reloaded!"));
