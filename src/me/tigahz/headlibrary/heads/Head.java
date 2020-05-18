@@ -1,6 +1,14 @@
 package me.tigahz.headlibrary.heads;
 
+import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.properties.Property;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
+
+import java.lang.reflect.Field;
 import java.util.Base64;
+import java.util.Iterator;
 
 /**
  * @author Tigahz
@@ -65,6 +73,45 @@ public class Head {
 
    public boolean isCustom() {
       return isCustom;
+   }
+
+   public static Head parseHead(ItemStack item) {
+      if (item == null) return null;
+      if (!item.hasItemMeta()) return null;
+      if (item.getType() != Material.PLAYER_HEAD) return null;
+
+      SkullMeta meta = (SkullMeta) item.getItemMeta();
+
+      String base64;
+      try {
+         base64 = getBase64(item);
+      } catch (Exception e) {
+         return null;
+      }
+
+      return new Head("", "", base64);
+
+   }
+
+   public static String getBase64(ItemStack item) throws IllegalAccessException, NoSuchFieldException {
+      if (item == null) return null;
+      if (!item.hasItemMeta()) return null;
+      if (item.getType() != Material.PLAYER_HEAD) return null;
+      SkullMeta meta = (SkullMeta) item.getItemMeta();
+
+      String link = null;
+      if (!meta.hasOwner()) {
+         Field field = meta.getClass().getDeclaredField("profile");
+         field.setAccessible(true);
+         GameProfile profile = (GameProfile) field.get(meta);
+         Iterator<Property> iterator = profile.getProperties().get("textures").iterator();
+         if (iterator.hasNext()) {
+            Property property = iterator.next();
+            link = property.getValue();
+         }
+
+      }
+      return link;
    }
 
 }

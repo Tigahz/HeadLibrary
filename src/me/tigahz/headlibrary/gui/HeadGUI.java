@@ -68,7 +68,7 @@ public class HeadGUI implements Listener {
          return;
       }
 
-      InventoryUtil.onClickItemCheck(player, item);
+      InventoryUtil.onClickItemCheck(player, item, event.getView());
    }
 
 }

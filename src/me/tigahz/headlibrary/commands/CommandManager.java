@@ -73,7 +73,12 @@ public class CommandManager implements TabExecutor {
                         keywords.add(keyword);
                         Bukkit.getPluginManager().registerEvents(gui, plugin);
                      }
-                     gui.openMenu(player);
+
+                     try {
+                        gui.openMenu(player);
+                     } catch (NullPointerException e) {
+                        player.sendMessage(Util.format(messages.PREFIX + "There were no results with your search"));
+                     }
                   }
                   return true;
                }

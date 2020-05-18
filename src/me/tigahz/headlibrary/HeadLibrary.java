@@ -8,7 +8,6 @@ import me.tigahz.headlibrary.util.HeadConfig;
 import me.tigahz.headlibrary.util.JoinListener;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 

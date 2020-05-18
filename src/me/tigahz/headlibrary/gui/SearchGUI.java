@@ -30,10 +30,13 @@ public class SearchGUI implements Listener {
       this.name = new MessageManager().PREFIX + "&cSearch";
    }
 
-   private Inventory getInventory(int page) {
+   public Inventory getInventory(int page) {
       List<Head> heads = HeadLibrary.getDatabaseManager().getHeadManager().getHeadsFromKeyword(keyword);
       heads.addAll(HeadLibrary.getDatabaseManager().getLetterManager().getHeadsFromKeyword(keyword));
       heads.addAll(HeadLibrary.getDatabaseManager().getCustomManager().getHeadsFromKeyword(keyword));
+
+      if (heads.isEmpty()) return null;
+
       return InventoryUtil.createHeadInventory(name, page, heads, InventoryUtil.HeadType.SEARCH);
    }
 
@@ -64,7 +67,7 @@ public class SearchGUI implements Listener {
          return;
       }
 
-      InventoryUtil.onClickItemCheck(player, item);
+      InventoryUtil.onClickItemCheck(player, item, event.getView());
    }
 
 }

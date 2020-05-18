@@ -11,6 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -18,11 +19,17 @@ import java.util.List;
 
 public class InventoryUtil {
 
-   public static void onClickItemCheck(Player player, ItemStack item) {
+   public static void onClickItemCheck(Player player, ItemStack item, InventoryView view) {
       if (item.getType() == Material.PLAYER_HEAD) {
 
          if (HeadLibrary.getInstance().economyEnabled) {
             if (HeadLibrary.getEconomy().getBalance(player.getName()) < HeadLibrary.getInstance().price) {
+
+               if (player.getInventory().firstEmpty() == -1) {
+                  player.sendMessage(Util.format(new MessageManager().ERROR_PREFIX + "Your inventory is full, please clear space!"));
+                  return;
+               }
+
                player.sendMessage(Util.format(new MessageManager().ERROR_PREFIX + "You don't have enough money to purchase this head!"));
                return;
             }
@@ -32,10 +39,12 @@ public class InventoryUtil {
 
          ItemStack clone = item.clone();
 
-         for (ItemStack i : player.getInventory()) {
+         for (ItemStack i : view.getBottomInventory()) {
             if (i != null) {
                if (i.getType() == Material.PLAYER_HEAD) {
-                  if (i.getItemMeta().getDisplayName().equalsIgnoreCase(Util.format(clone.getItemMeta().getDisplayName()))) {
+                  Head head = Head.parseHead(i);
+                  Head cloneHead = Head.parseHead(clone);
+                  if (head.getLink().equals(cloneHead.getLink())) {
                      i.setAmount(i.getAmount() + 1);
                      return;
                   }
